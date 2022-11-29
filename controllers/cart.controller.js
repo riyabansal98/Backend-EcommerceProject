@@ -66,3 +66,30 @@ exports.update = (req, res) => {
         res.status(500).send("Some internal server error happened while fetching cart details")
     })
 }
+
+exports.getCart = (req, res) => {
+
+    Cart.findByPk(req.params.cartId)
+    .then(cart => {
+
+        let ProductsSelected = [];
+
+        cart.getProducts()
+        .then(products => {
+
+            for(let i = 0; i < products.length; i++) {
+                ProductsSelected.push({
+                    id: products[i].id,
+                    name: products[i].name,
+                    cost: products[i].cost
+                })
+            }
+
+            res.status(200).send({
+                id: cart.id,
+                productsSelected: ProductsSelected,
+                cost: cart.cost
+            })
+        })
+    })
+}
