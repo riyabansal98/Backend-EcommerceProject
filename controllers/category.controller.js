@@ -19,7 +19,7 @@ exports.create = (req, res) => {
     })
     .catch(err => {
         console.log("Issue in inserting the category")
-        res.send(500).send("Issue in creating the category")
+        res.status(500).send("Issue in creating the category")
     })
 }
 
