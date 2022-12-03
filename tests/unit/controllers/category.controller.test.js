@@ -33,16 +33,33 @@ describe('CategoryController.create', () => {
         expect(CategoryModel.create).toHaveBeenCalledWith(newCategory)
     });
 
-    test('should call Category.create and ends with an error', async () => {
+    // test('should call Category.create and ends with an error', async () => {
 
-         //Mock model command
-         const spy = jest.spyOn(CategoryModel, 'create')
-         .mockImplementation((newCategory) => Promise.reject(Error("This is an error")))
+    //      //Mock model command
+    //      const spy = jest.spyOn(CategoryModel, 'create')
+    //      .mockImplementation((newCategory) => Promise.reject(Error("This is an error")))
 
-         await CategoryController.create(req, res)
+    //      await CategoryController.create(req, res)
 
-         expect(res.status).toHaveBeenCalledWith(500);
-         expect(CategoryModel.create).toHaveBeenCalledWith(newCategory)
-         expect(res.send).toHaveBeenCalledWith("Issue in creating the category")
+    //      expect(res.status).toHaveBeenCalledWith(500);
+    //      expect(CategoryModel.create).toHaveBeenCalledWith(newCategory)
+    //      expect(res.send).toHaveBeenCalledWith("Issue in creating the category")
+    // })
+})
+
+describe('CategoryController.findOne', () => {
+
+    test('should Call CategoryController.findOne', async () => {
+
+        req.params = {id : '1' }
+
+        const spy = jest.spyOn(CategoryModel, 'findByPk')
+        .mockImplementation(() => Promise.resolve(newCategory))
+
+        await CategoryController.findOne(req.params.id);
+        
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.send).toHaveBeenCalledWith(newCategory);
+        expect(CategoryModel.findByPk).toHaveBeenCalledWith(req.params.id);
     })
 })

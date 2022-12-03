@@ -38,7 +38,8 @@ exports.findAll = (req, res) => {
 
 exports.findOne = (req, res) => {
 
-    const categoryId = req.params.id;
+    let categoryId = req.params.id;
+    
     Category.findByPk(categoryId)
     .then(category => {
         //if a user sends in a id which is not present in the db
